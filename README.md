@@ -1,4 +1,6 @@
 # date-diff Test
+[![Circle CI](https://circleci.com/gh/raminv80/date-diff-test/tree/master.svg?style=svg)](https://circleci.com/gh/raminv80/date-diff-test/tree/master)
+
 To view a live demo of this app visit [this link](http://ramin.koding.io/date-diff/).
 
 ## About the test
