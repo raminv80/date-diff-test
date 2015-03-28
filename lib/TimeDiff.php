@@ -15,6 +15,14 @@ class TimeDiff
     $this->dateTime2_in_timezone = $this->datetime_in_timezone($datetime_str_2, $str_includes_time_zone, $timezone2);
   }
 
+  function setFrom($datetime_str, $str_includes_time_zone=false, $timezone=false){
+    $this->dateTime1_in_timezone = $this->datetime_in_timezone($datetime_str, $str_includes_time_zone, $timezone);
+  }
+
+  function setTo($datetime_str, $str_includes_time_zone=false, $timezone=false){
+    $this->dateTime2_in_timezone = $this->datetime_in_timezone($datetime_str, $str_includes_time_zone, $timezone);
+  }
+
   #if datetime_str includes a timezone make sure str_includes_time_zone is set to true
   #otherwise the timezone will be overridden.
   function datetime_in_timezone($datetime_str, $str_includes_time_zone=false, $timezone=false){
