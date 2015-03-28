@@ -9,10 +9,14 @@ class TimeDiff
   var $dateTime2_in_timezone;
   private $default_time_zone;
 
-  function __construct($datetime_str_1, $datetime_str_2, $str_includes_time_zone=false, $default_time_zone='UTC', $timezone1=false, $timezone2=false) {
+  function __construct($datetime_str_1 = false, $datetime_str_2 = false, $str_includes_time_zone=false, $default_time_zone='UTC', $timezone1=false, $timezone2=false) {
     $this->default_time_zone = $default_time_zone;
-    $this->dateTime1_in_timezone = $this->datetime_in_timezone($datetime_str_1, $str_includes_time_zone, $timezone1);
-    $this->dateTime2_in_timezone = $this->datetime_in_timezone($datetime_str_2, $str_includes_time_zone, $timezone2);
+    if($datetime_str_1 !== false){
+      $this->dateTime1_in_timezone = $this->datetime_in_timezone($datetime_str_1, $str_includes_time_zone, $timezone1);
+    }
+    if($datetime_str_2 !== false){
+      $this->dateTime2_in_timezone = $this->datetime_in_timezone($datetime_str_2, $str_includes_time_zone, $timezone2);
+    }
   }
 
   function setFrom($datetime_str, $str_includes_time_zone=false, $timezone=false){
