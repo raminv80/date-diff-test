@@ -77,7 +77,7 @@
             <p class="lead">
               In the selected date range there are
               <span class="label label-default" data-toggle="tooltip" data-placement="top" title="equivalent to <?=converted($diffs['days'])?>."><?=$diffs['days']['value']?></span> Days,
-              <span class="label label-default" data-toggle="tooltip" data-placement="top" title="equivalent to <?=converted($diffs['weekdays'])?>."><?=$diffs['weekdays']['value']?></span> Week Days and
+              <span class="label label-default" data-toggle="tooltip" data-placement="top" title="equivalent to <?=converted($diffs['weekdays'])?>."><?=$diffs['weekdays']['value']?></span> Week Days or
               <span class="label label-default" data-toggle="tooltip" data-placement="top" title="equivalent to <?=converted($diffs['weeks'])?>."><?=$diffs['weeks']['value']?></span> Complete Weeks<br/>
             </p>
             <small>Tip: Hover on numbers to see more details.</small>
