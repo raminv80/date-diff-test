@@ -1,3 +1,10 @@
 machine:
   php:
     version: 5.6.2
+deployment:
+  staging:
+    branch: master
+    commands:
+      - ssh ramin@ramin.koding.io
+      - cd /home/ramin/Web/date-diff
+      - git pull
