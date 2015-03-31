@@ -5,6 +5,4 @@ deployment:
   staging:
     branch: master
     commands:
-      - ssh ramin@ramin.koding.io
-      - cd /home/ramin/Web/date-diff
-      - git pull
+      - ssh ramin@ramin.koding.io 'bash -s' < config/deploy/script.sh
