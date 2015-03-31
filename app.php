@@ -3,6 +3,7 @@ include 'config/autoload.php';
 
 $tzlist = DateTimeZone::listIdentifiers(DateTimeZone::ALL);
 $show_result = false;
+$errors = [];
 
 if(!empty($_REQUEST['date-from']) && !empty($_REQUEST['date-to'])){
   $date_from = $_REQUEST['date-from'];
@@ -34,7 +35,9 @@ if(!empty($_REQUEST['date-from']) && !empty($_REQUEST['date-to'])){
       "to_second" => $time_diff->weekdays_in("second")
     )
   );
-  $show_result = true;
+
+  $show_result = $time_diff->valid();
+  $errors = $time_diff->get_errors();
 }
 
 function converted($dif){
