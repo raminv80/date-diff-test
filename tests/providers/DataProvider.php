@@ -35,5 +35,14 @@ class DataProvider extends TestHelper{
       );
   }
 
+  public function dateTimeWithInvalidInputProvider(){
+   return array(
+        array("10/Oct/2000:13:55:36 -0700", "10/Oct/2000:13:55:36 -0700", 0),
+        array("invalid", "11/Oct/2000:13:55:36 -0700", 1),
+        array("10/Oct/2000:13:55:36 -0700", "invalid", 1),
+        array("invalid", "invalid", 2)
+      ); 
+  }
+
 }
 ?>

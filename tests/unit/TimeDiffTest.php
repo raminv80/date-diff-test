@@ -51,6 +51,19 @@ class TimeDiffTest extends dataProvider{
   }
 
   /**
+   * @dataProvider dateTimeZoneProvider
+   */
+  public function testDaysInDifferentTimeZoneBySetters($from, $to, $fromTimeZone, $toTimeZone, $days, $weekdays, $weeks){
+    $time_diff = new TimeDiff();
+    $time_diff->setFrom($from, false, $fromTimeZone);
+    $time_diff->setTo($to, false, $toTimeZone);
+    
+    $this->assertEquals($days, $time_diff->days_in());
+    $this->assertEquals($weekdays, $time_diff->weekdays_in());
+    $this->assertEquals($weeks, $time_diff->weeks_in());
+  }
+
+  /**
    * @dataProvider dateTimeWithTextualTimeZoneProvider
    */
   public function testDaysInDifferentTextualTimeZone($from, $to, $days, $weekdays, $weeks){
@@ -59,6 +72,23 @@ class TimeDiffTest extends dataProvider{
     $this->assertEquals($days, $time_diff->days_in());
     $this->assertEquals($weekdays, $time_diff->weekdays_in());
     $this->assertEquals($weeks, $time_diff->weeks_in());
+  }
+
+  /**
+   * @dataProvider dateTimeWithInvalidInputProvider
+   */
+  public function testInvalidInputsInConstructor($from, $to, $errors){
+    $time_diff = new TimeDiff($from, $to, true);
+    $this->assertEquals($errors, count($time_diff->get_errors()));
+  }
+
+  public function testInvalidInputsInSetter(){
+    $time_diff = new TimeDiff('invalid', 'invalid');
+    $this->assertEquals(2, count($time_diff->get_errors()));
+    $time_diff->setFrom('2015-03-01');
+    $this->assertEquals(1, count($time_diff->get_errors()));
+    $time_diff->setTo('2015-03-02');
+    $this->assertEquals(0, count($time_diff->get_errors()));
   }
 
 }

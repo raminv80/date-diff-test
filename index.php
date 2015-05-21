@@ -84,6 +84,14 @@
           </div>
           <?php endif; ?>
 
+          <?php if(count($errors)>0): ?>
+          <ul class="errors">
+            <?php foreach($errors as $error):?>
+            <li><?="Date {$error['target']} {$error['message']}"?></li>
+            <?php endforeach; ?>
+          </ul>
+          <?php endif;?>
+
           <div class="mastfoot">
             <div class="inner">
               <p>This page is developed as a reply to Aligent's test by <a href="my.linkedin.com/in/raminvakilian">Ramin Vakilian</a>.</p>
