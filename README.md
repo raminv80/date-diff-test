@@ -3,7 +3,7 @@
 
 To view a live demo of this app visit [this link](http://ramin.koding.io/date-diff/).
 
-## About the test
+## About the test 
 This is a respond to following coding challenge:
 
 1. Find out the number of days between two date parameters.

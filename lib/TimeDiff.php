@@ -8,23 +8,42 @@ class TimeDiff
   var $dateTime1_in_timezone;
   var $dateTime2_in_timezone;
   private $default_time_zone;
+  private $errors = array();
 
   function __construct($datetime_str_1 = false, $datetime_str_2 = false, $str_includes_time_zone=false, $default_time_zone='UTC', $timezone1=false, $timezone2=false) {
     $this->default_time_zone = $default_time_zone;
     if($datetime_str_1 !== false){
-      $this->dateTime1_in_timezone = $this->datetime_in_timezone($datetime_str_1, $str_includes_time_zone, $timezone1);
+      try {
+        $this->dateTime1_in_timezone = $this->datetime_in_timezone($datetime_str_1, $str_includes_time_zone, $timezone1);
+      }catch(Exception $e){
+        $this->set_error_for('From');
+      }
     }
     if($datetime_str_2 !== false){
-      $this->dateTime2_in_timezone = $this->datetime_in_timezone($datetime_str_2, $str_includes_time_zone, $timezone2);
+      try{
+        $this->dateTime2_in_timezone = $this->datetime_in_timezone($datetime_str_2, $str_includes_time_zone, $timezone2);
+      }catch(Exception $e){
+        $this->set_error_for('To');
+      }
     }
   }
 
   function setFrom($datetime_str, $str_includes_time_zone=false, $timezone=false){
-    $this->dateTime1_in_timezone = $this->datetime_in_timezone($datetime_str, $str_includes_time_zone, $timezone);
+    try{
+      $this->dateTime1_in_timezone = $this->datetime_in_timezone($datetime_str, $str_includes_time_zone, $timezone);
+      $this->reset_error_for('From');
+    }catch(Exception $e){
+      $this->set_error_for('From');
+    }
   }
 
   function setTo($datetime_str, $str_includes_time_zone=false, $timezone=false){
-    $this->dateTime2_in_timezone = $this->datetime_in_timezone($datetime_str, $str_includes_time_zone, $timezone);
+    try{
+      $this->dateTime2_in_timezone = $this->datetime_in_timezone($datetime_str, $str_includes_time_zone, $timezone);
+      $this->reset_error_for('To');
+    }catch(Exception $e){
+      $this->set_error_for('To');
+    }
   }
 
   #if datetime_str includes a timezone make sure str_includes_time_zone is set to true
@@ -52,6 +71,7 @@ class TimeDiff
   }
 
   function days_in($convert_to=false){
+    if(count($this->errors)>0) return 0;
     $interval = $this->get_interval();
     if($interval){
       $dif = $interval->days;
@@ -73,6 +93,7 @@ class TimeDiff
   }
 
   function weeks_in($convert_to=false){
+    if(count($this->errors)>0) return 0;
     $interval = $this->get_interval();
     if($interval){
       $dif = floor($interval->days / 7);
@@ -95,6 +116,7 @@ class TimeDiff
   }
 
   function weekdays_in($convert_to=false){
+    if(count($this->errors)>0) return 0;
     $interval = $this->get_interval();
     if($interval){
       $weeks_difference = floor($interval->days / 7);
@@ -123,6 +145,37 @@ class TimeDiff
       }
       return $dif;
     }else return false;
+  }
+
+  private function set_error_for($target, $msg = 'input format is invalid.'){
+    $set = false;
+    foreach($this->errors as $error){
+      if($error['target']==$target){
+        $set = true;
+        $error['message']==$msg;
+        break;
+      }
+    }
+    if(!$set){
+      array_push($this->errors, ['target'=>$target, 'message'=>$msg]);
+    }
+  }
+
+  private function reset_error_for($target){
+    foreach($this->errors as $key=>$error){
+      if($error['target']==$target){
+        unset($this->errors[$key]);
+        break;
+      }
+    }
+  }
+
+  function get_errors(){
+    return $this->errors;
+  }
+
+  function valid(){
+    return count($this->errors)==0;
   }
 
 }
